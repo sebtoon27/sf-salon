@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RendezVous{% endblock %}
+
+{% block body %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' >Modifier un rendez-vous</h1>
+
+    {{ include('rendez_vous/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_rendez_vous_index') }}">back to list</a>
+
+    {{ include('rendez_vous/_delete_form.html.twig') }}
+{% endblock %}

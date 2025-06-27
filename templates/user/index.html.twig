@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+   <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' >Liste des utilisateurs</h1>
+
+    <table id="user-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                {# <th>Password</th> #}
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Statut_premium</th>
+                {# <th>Image</th> #}
+                <th>Avatar</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {# <td>{{ user.password }}</td> #}
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.statutPremium ? 'Oui' : 'Non' }}</td>
+                {# <td>{{ user.image }}</td> #}
+                <td><img class='profil' src="{{ asset("uploads/images/"~ user.avatar) }}" alt="user image"></td>
+                <td>
+                    <a class="btn3" href="{{ path('app_user_show', {'id': user.id}) }}">Afficher</a>
+                    <a class="btn3" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn3" href="{{ path('app_user_new') }}">Créer un nouvel utilisateur</a>
+{% endblock %}

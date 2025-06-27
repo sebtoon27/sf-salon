@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prestation{% endblock %}
+
+{% block body %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' >La prestation {{ prestation.nom }}</h1>
+
+
+    <table class="table">
+        <tbody>
+            
+                <th>Nom</th>
+                <td>{{ prestation.nom }}</td>
+            </tr>
+            <tr>
+                <th>Durée</th>
+                <td>{{ prestation.duree }} en minute</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ prestation.prix }} en euro</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ prestation.description }}</td>
+            </tr>
+            <tr>
+                <th>L'ilustration :</th>
+                <td> <img width="200" src="{{ asset('/uploads/images/') ~ prestation.image}}" alt=""></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a id='btn' href="{{ path('app_prestation_index') }}">Retour</a>
+
+    <a id='btn' href="{{ path('app_prestation_edit', {'id': prestation.id}) }}">Modifier</a>
+
+    {{ include('prestation/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prestation index{% endblock %}
+
+{% block body %}
+    <h1 style='font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' 
+    class='h1'>Les Prestations disponibles au salon de coiffure</h1>
+
+    <div class="table2">
+       
+        {% for prestation in prestations %}
+            <div class="card2">
+               
+                <h2>{{ prestation.nom }}</h2>
+                <p>Pour une durée de {{ prestation.duree }}mins</p>
+                <p>Au tarif de {{ prestation.prix }}€</p>
+                <p>La préstation comprend : {{ prestation.description }}</p>
+                <p><img width="200" src="{{ asset('/uploads/images/') ~ prestation.image}}" alt=""></p>
+                
+                <div>
+                {% if app.user %}
+                    <a href="{{ path('app_rendez_vous_new', {'id': prestation.id}) }}">Réserver</a>
+                    {% endif %}
+                    {% if is_granted("ROLE_ADMIN")%}
+                    <a href="{{ path('app_prestation_show', {'id': prestation.id}) }}">Voir</a>
+                    <a href="{{ path('app_prestation_edit', {'id': prestation.id}) }}">Modifier</a>
+                 {% endif %}   
+                </div>
+            </div>
+        {% else %}
+            <tr>
+                <p colspan="8">no records found</p>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </div>
+{% if is_granted("ROLE_ADMIN")%}
+    <a id='btn'href="{{ path('app_prestation_new') }}">Ajouter une prestation</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyProfilController!{% endblock %}
+
+{% block body %}
+<h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal;  padding-top: 3rem; color: #441442; text-align: center;' >Votre compte: {{ app.user.prenom }} {{ app.user.nom }}</h1>
+
+
+
+
+<div class="compte">
+{% if app.user %}
+
+<img class='profil' src="{{ asset("uploads/images/"~ app.user.avatar) }}" alt="user image">
+
+{% endif %}
+
+<h2>{{ app.user.email }}</h2>
+<h2>{{ app.user.prenom }} {{ app.user.nom }}</h2>
+<h2>{{ app.user.telephone }}</h2>
+<h2>{{ app.user.adresse }}</h2>
+
+
+<a href="{{ path('app_my_profil_edit', {id : app.user.id}) }}" type="button"  class="btn3 flex-grow-1">Modifier mes informations</a>
+
+
+</div>
+
+
+
+{% endblock %}

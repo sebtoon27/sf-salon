@@ -1,0 +1,60 @@
+{{ form_start(form) }}
+
+{{ form_row(form.date) }}
+
+<div class="prestation-list">
+    {% for child in form.prestation %}
+        <div class="prestation-choice">
+            {{ form_widget(child) }}
+            {{ form_label(child) }}
+            {% set prestation = child.vars.data %}
+            {% if prestation is not same as(false) and prestation is not null %}
+                {# <img src="{{ asset('uploads/images/' ~ prestation.image) }}" alt="{{ prestation.nom }}" width="80"> #}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<table id="recap-table" border="1" style="margin-top:20px;">
+    <tr>
+        <th>Prix total (€)</th>
+        <th>Durée totale (min)</th>
+    </tr>
+    <tr>
+        <td id="prix-total">0</td>
+        <td id="duree-total">0</td>
+    </tr>
+</table>
+
+{{ form_rest(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function updateRecap() {
+        let totalPrix = 0;
+        let totalDuree = 0;
+        document.querySelectorAll('.prestation-choice input[type="checkbox"]:checked').forEach(function(checkbox) {
+            totalPrix += parseFloat(checkbox.dataset.prix);
+            totalDuree += parseInt(checkbox.dataset.duree);
+        });
+        document.getElementById('prix-total').textContent = totalPrix;
+
+        // Conversion en heures et minutes
+        const heures = Math.floor(totalDuree / 60);
+        const minutes = totalDuree % 60;
+        let dureeAffichee = '';
+        if (heures > 0) {
+            dureeAffichee += heures + 'h ';
+        }
+        dureeAffichee += minutes + 'm';
+        document.getElementById('duree-total').textContent = dureeAffichee;
+    }
+
+    document.querySelectorAll('.prestation-choice input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', updateRecap);
+    });
+
+    updateRecap(); // Initialisation au chargement
+});
+</script>
+{{ form_end(form) }}

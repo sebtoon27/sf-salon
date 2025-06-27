@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RendezVous{% endblock %}
+
+{% block body %}
+   <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal;  padding-top: 3rem; color: #441442; text-align: center;' >Le RendezVous de {{ rendez_vou.client.nom }} {{ rendez_vou.client.prenom }}</h1>
+
+    <table class="table">
+        <tbody>
+        
+            <tr>
+                <th>Client :</th>
+                <td>{{ rendez_vou.client.nom }} {{ rendez_vou.client.prenom }}</td>
+            </tr>
+            <tr>
+                <th>les prestations et leurs durées :</th>
+    <td>
+        {% set total_duree = 0 %}
+        {% for prestation in rendez_vou.prestation %}
+            {{ prestation.nom }} pour une durée de: {{ prestation.duree }}min{% if not loop.last %}, {% endif %}
+            {% set total_duree = total_duree + prestation.duree %}
+        {% endfor %}
+        <br>
+        {% set heures = (total_duree // 60) %}
+        {% set minutes = (total_duree % 60) %}
+        <strong>Durée totale : 
+            {% if heures > 0 %}
+                {{ heures }}h
+            {% endif %}
+            {% if minutes > 0 or heures == 0 %}
+                {{ minutes }}min
+            {% endif %}
+        </strong>
+    </td>
+    
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ rendez_vou.date ? rendez_vou.date|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            {# <tr>
+                <th>Validation</th>
+                <td>{{ rendez_vou.validation ? 'Yes' : 'No' }}</td>
+            </tr> #}
+        </tbody>
+    </table>
+
+    <a class="btn3" href="{{ path('app_rendez_vous_index') }}">Retour</a>
+    {% if is_granted("ROLE_ADMIN")%}
+    <a class='btn3' href="{{ path('app_rendez_vous_calendrier') }}">Le calendrier des RDV</a>
+    <a class="btn3 " href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}">Le Modifier</a>
+    {% endif %}
+  
+
+    {{ include('rendez_vous/_delete_form.html.twig') }}
+{% endblock %}

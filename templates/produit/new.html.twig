@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: 400; font-style: normal; font-size: 3rem; color: #441442; text-align: center;' >Ajouter un nouveaux produit ou une nouvelle promotion</h1>
+
+    {{ include('produit/_form.html.twig') }}
+
+    <a id='btn' href="{{ path('app_produit_index') }}">Retourner vers les promotions</a>
+{% endblock %}

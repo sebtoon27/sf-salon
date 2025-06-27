@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RendezVous{% endblock %}
+
+{% block body %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal;  padding-top: 3rem; color: #441442; text-align: center;' >Pendre un nouveau rendez-vous</h1>
+    {{ include('rendez_vous/_form.html.twig') }}
+
+    <script>
+        console.log('Script chargé');
+    const slotsTaken = {{ slots_taken|json_encode|raw }};
+    const dateInput = document.querySelector('input[type="datetime-local"]');
+    const prestationSelect = document.querySelector('#rendez_vous_form_prestation'); // adapte l'id selon ton form
+
+    function getPrestationDuration() {
+        const selected = prestationSelect.selectedOptions[0];
+        return selected ? parseInt(selected.dataset.duree) : 0;
+    }
+
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value);
+        const duration = getPrestationDuration();
+        const selectedEnd = new Date(selectedDate.getTime() + duration * 60000);
+
+        for (const slot of slotsTaken) {
+            const slotStart = new Date(slot.start);
+            const slotEnd = new Date(slot.end);
+
+            if (selectedDate < slotEnd && selectedEnd > slotStart) {
+                alert('Ce créneau chevauche un rendez-vous existant.');
+                this.value = '';
+                break;
+            }
+        }
+    });
+     </script>
+    <a class='btn3' href="{{ path('app_rendez_vous_calendrier') }}">Le calendrier des RDV</a>
+    <a class='btn3' href="{{ path('app_rendez_vous_index') }}">Retour</a>
+{% endblock %}

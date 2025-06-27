@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+
+
+{% if app.user %}
+   <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem; color: #441442; text-align: center;' >Bienvenue {{ app.user.prenom }} !</h1>
+{% else %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem; color: #441442; text-align: center;' >Bienvenue sur notre site !</h1>
+{% endif %}
+
+
+<div class="table4">
+
+
+<div class="card2">
+<img class="imghome" src="{{ asset('uploads/image fix/logo2.jpg') }}" alt="logo">
+<h2>Qui somme nous ?</h2>
+<p >Bienvenue dans notre salon de coiffure, un espace dédié à la beauté et au bien-être. Notre équipe de professionnels passionnés vous accueille dans une ambiance chaleureuse et conviviale pour prendre soin de vos cheveux. Que vous souhaitiez une coupe tendance, une coloration éclatante ou un moment de détente, nous mettons tout en œuvre pour répondre à vos envies et sublimer votre style. Venez vivre une expérience unique et repartez avec le sourire !</p>
+<a class=" btn3 " href='{{ path('app_contact') }}'>Nous contacter</a>
+</div>
+
+
+
+
+  <div id="promo">
+    <!-- Carousel wrapper -->
+    <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-mdb-carousel-init>
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+    {% for produit in produits %}
+    {# <pre>
+    {{ dump(loop) }}
+   </pre> #}
+    <button
+
+      type="button"
+      data-mdb-target="#carouselBasicExample"
+      data-mdb-slide-to="{{ loop.index0 }}"
+      {% if loop.first %}class="active"{% endif %}
+      aria-current="{% if loop.first %}true{% endif %}"
+      aria-label="Slide {{ loop.index }}"
+    ></button>
+    {% endfor %}
+    
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+    {% for produit in produits %}
+    <div class="carousel-item {% if loop.first %}active{% endif %}">
+      <img src="{{ asset('/uploads/images/' ~ produit.image1) }}" class="d-block w-100 img " alt="{{ produit.nom }}"/>
+      <div class="carousel-caption d-none d-md-block">
+        <h5 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 2rem; color: #441442; text-align: center;' >{{ produit.nom }}</h5>
+        
+        </div>
+      </div>
+      {% endfor %}
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+      </button>
+    <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- Carousel wrapper -->
+</div>
+  <div class="presentation">
+  <h2 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 2rem; color: #441442; text-align: center;' >Nos Promotions</h2>
+  <p>Découvrez nos produits de qualité supérieure, soigneusement sélectionnés pour vous offrir le meilleur.</p>
+  <p>Profitez de nos offres exclusives et faites vos achats dans le salon en toute confiance.</p>
+  <a href="{{ path('app_produit_index') }}" class="btn">Voir les produits</a>
+</div>
+
+</div>
+<div class="card2">
+<h2>Notre salon</h2>
+<img class="imghome" src="{{ asset('uploads/image fix/deventure.webp') }}" alt="logo">
+<p>Notre salon de coiffure est un lieu où la créativité et le professionnalisme se rencontrent. Nous proposons une large gamme de services, allant des coupes classiques aux coiffures les
+<img class="imghome" src="{{ asset('uploads/image fix/salon.jpg') }}" alt="logo">
+<a class=" btn3 " href='{{ path('app_contact') }}'>Nous trouver</a>
+</div>
+
+{% endblock %}

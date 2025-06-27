@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1 style='font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' 
+    class='h1'>Inscrivez-vous</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.adresse) }}
+       
+
+        {# {{ form_row(registrationForm.imageFile, {
+            label: 'Image'
+        }) }} #}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.avatar) }}
+
+        {# {{ form_row(registrationForm.agreeTerms) }} #}
+
+        <button class="btn" type="submit" class="btn">Valider</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

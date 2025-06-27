@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1 style='font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' 
+    class='h1'>Modifier votre compte Utilisateur</h1>
+
+    {{ include('my_profil/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+{# Route de suppression du compte utilisateur #}
+   
+{# <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Attention !! cette action sera définitive');">
+<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+<button class="btn">Supprimer le compte</button>
+</form> #}
+
+    
+{% endblock %}

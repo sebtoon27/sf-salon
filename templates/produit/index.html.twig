@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+  
+{% block body %}
+    <h1 style='font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem; color: #441442; text-align: center;' 
+    class='h1'>Les promotions disponibles au salon de coiffure</h1>
+<div class="table">
+    
+            {% for produit in produits %}
+           
+                
+    <div class="card">
+                <h2>{{ produit.nom }}</h2>
+                <p>Promotion du : {{ produit.dateDebut ? produit.dateDebut|date('d-m-y') : '' }}</p>
+                <p>au : {{ produit.dateFin ? produit.dateFin|date('d-m-y ')}} dans la limite des stocks disponible.</p>
+                <p>{{ produit.description }}</p>
+                <p>Prix {{ produit.prix }} €</p>
+                <div class="imageprods">
+                <p> <img class='imageprod' src="{{ asset('/uploads/images/') ~ produit.image1}}" alt=""></p>
+                <p> <img class='imageprod' src="{{ asset('/uploads/images/') ~ produit.image2}}" alt=""></p>
+                <p> <img class='imageprod' src="{{ asset('/uploads/images/') ~ produit.image3}}" alt=""></p>
+                </div>
+                {% if is_granted("ROLE_ADMIN")%}
+                <a  class= "btn" href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir plus</a>
+                <a class= "btn" href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
+                {% endif %}
+    </div>
+                
+            {% else %}
+                
+                <p colspan="9">no records found</p>
+                
+            {% endfor %}
+                
+                </div>
+                {% if is_granted("ROLE_ADMIN")%}
+                <a class="btn3" href="{{ path('app_produit_new') }}">Ajouter une nouvelle Promotion</a>
+                 {% endif %}
+            {% endblock %}

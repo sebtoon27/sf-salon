@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RendezVous index{% endblock %}
+
+{% block body %}
+    <h1 style=' font-family: "Parisienne", cursive; font-weight: font-family: "Parisienne", cursive; 400; font-style: normal; font-size: 3rem;  color: #441442; text-align: center;' >Mes RendezVous</h1>
+
+   
+
+    <div class="table">
+    {% for rendez_vou in rendez_vouses %}
+        <div class="card4">
+        <h2>Client {{ rendez_vou.client.nom }} {{ rendez_vou.client.prenom }}</h2>
+        
+        <p>Le {{ rendez_vou.date ? rendez_vou.date|date('d-m-Y') : '' }}</p>
+        <p>à {{ rendez_vou.date ? rendez_vou.date|date('H:i') : '' }}</p>
+        <p>Durée du rendez-vous </p>
+        
+        {% set total_duree = 0 %}
+        {% for prestation in rendez_vou.prestation %}
+        {# <p>{{ prestation.nom }} pour une durée de: {{ prestation.duree }}min{% if not loop.last %}, {% endif %}</p> #}
+        
+        {% set total_duree = total_duree + prestation.duree %}
+        {% endfor %}
+        {% set heures = (total_duree // 60) %}
+        {% set minutes = (total_duree % 60) %}
+        {% if heures > 0 %}
+        <p>{{ heures }}heures
+        {% endif %}
+        {% if minutes > 0 or heures == 0 %}
+        {{ minutes }}minutes</p>
+        {% else %}
+        0minutes</p>
+        {% endif %}
+        
+        
+        <a class="btn2"href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}">Voir</a>
+    </div>
+    {% else %}
+           
+                <h1 colspan="5">Pas de rendez-vous !</h1>
+           
+        {% endfor %}
+        
+
+    </div>
+    
+                    <a class="btn3" href="{{ path('app_rendez_vous_calendrier') }}">Calendrier</a>
+    {% if is_granted("ROLE_ADMIN") %}
+    <a class="btn3" href="{{ path('app_rendez_vous_new') }}">Ajouter un rendez-vous</a>
+    {% endif %}
+{% endblock %}

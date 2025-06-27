@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Favicon #}
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+
+
+
+<link href="https://fonts.googleapis.com/css2?family=Clicker+Script&family=Edu+QLD+Hand:wght@400..700&family=Mea+Culpa&family=Parisienne&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+       
+       
+       
+        {# Bloc pour ajouter des feuilles de style (CSS) #}
+        {% block stylesheets %}
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.11/index.global.min.css" rel="stylesheet"/>
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {# Bloc pour ajouter des scripts JS #}
+        {% block javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.11/index.global.min.js"></script>
+            {{ encore_entry_script_tags('app') }}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+
+
+        {# Inclusion de l'en-tête du site #}
+        {% include ( 'partials/header.html.twig' ) %}
+        <main id='main'>  
+            {# Bloc principal du contenu de la page #}
+            {% block body %}
+            
+            {% endblock %}
+        </main>
+
+        {# Boucle sur les messages flash pour les afficher dans une modal Bootstrap #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="modal fade" id="flashModal-{{ loop.parent.loop.index }}-{{ loop.index }}" tabindex="-1" aria-labelledby="flashModalLabel-{{ loop.parent.loop.index }}-{{ loop.index }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      {# En-tête de la modal avec couleur selon le type de message #}
+                      <div class="modal-header bg-{{ label == 'error' ? 'danger' : 'success' }}">
+                        <h5 class="modal-title" id="flashModalLabel-{{ loop.parent.loop.index }}-{{ loop.index }}">
+                          {{ label == 'error' ? 'Erreur' : 'Succès' }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                      </div>
+                      <div class="modal-body">
+                        {{ message|raw }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# Script pour ouvrir automatiquement la première modal trouvée #}
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.querySelector('.modal');
+    if (modal && typeof bootstrap !== 'undefined') {
+        var myModal = new bootstrap.Modal(modal);
+        myModal.show();
+    }
+});
+</script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
+        {# Inclusion du pied de page #}
+        {% include ( 'partials/footer.html.twig' ) %}
