@@ -13,8 +13,9 @@
                 
     <div class="card">
                 <h2>{{ produit.nom }}</h2>
-                <p>Promotion du : {{ produit.dateDebut ? produit.dateDebut|date('d-m-y') : '' }}</p>
-                <p>au : {{ produit.dateFin ? produit.dateFin|date('d-m-y ')}} dans la limite des stocks disponible.</p>
+                {% if produit.dateDebut and produit.dateFin %}
+                <p>Promotion du {{ produit.dateDebut|date('d-m-y') }} au {{ produit.dateFin|date('d-m-y') }} dans la limite des stocks disponible.</p>
+                {% endif %}
                 <p>{{ produit.description }}</p>
                 <p>Prix {{ produit.prix }} €</p>
                 <div class="imageprods">

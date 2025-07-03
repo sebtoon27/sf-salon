@@ -20,17 +20,20 @@ final class RendezVousController extends AbstractController
 {
     // Affiche la liste de tous les rendez-vous
     #[Route(name: 'app_rendez_vous_index', methods: ['GET'])]
-    public function index(RendezVousRepository $rendezVousRepository, ): Response
-    {
-        $rdvs = $rendezVousRepository->findAllOrderedByDate();
+public function index(RendezVousRepository $rendezVousRepository, Security $security ): Response
+{
+    $user = $security->getUser();
 
-        // Récupère tous les rendez-vous et les passe à la vue
-        return $this->render('rendez_vous/index.html.twig', [
-            'rendez_vouses' => $rendezVousRepository->findAll(),
-            'rendez_vouses' => $rdvs,
-        ]);
+    if ($this->isGranted('ROLE_ADMIN')) {
+        $rendez_vouses = $rendezVousRepository->findAll();
+    } else {
+        $rendez_vouses = $rendezVousRepository->findBy(['client' => $user]);
     }
 
+    return $this->render('rendez_vous/index.html.twig', [
+        'rendez_vouses' => $rendez_vouses,
+    ]);
+}
  
 // Crée un nouveau rendez-vous (formulaire + traitement)
 #[Route('/new', name: 'app_rendez_vous_new', methods: ['GET', 'POST'])]

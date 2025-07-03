@@ -719,11 +719,28 @@ form .btn:hover {
 
     background-color: #441442;
 }
+.fc-event-title:hover, .fc-event-time:hover {
+
+    background-color: #ffffff;
+    color: #441442;
+    z-index: 0;
+    cursor: pointer;
+}
 
 .fc-event {
 
     background-color: #441442;
     color: rgb(255, 255, 255);
+    
+}
+.fc-event:hover {
+
+    background-color: #ffffff;
+    z-index: 0;
+    color:  #441442;
+    cursor: pointer;
+
+    
 }
 
 #calendar {
@@ -736,7 +753,7 @@ form .btn:hover {
     padding: 1rem;
     margin: 2rem auto;
     width: 80%;
-    min-height: 70vh;
+   
 
 }
 
@@ -746,6 +763,7 @@ form .btn:hover {
     font-style: normal;
     font-size: 2rem;
     color: #441442;
+    height: 10vh;
 }
 
 .compte {
@@ -815,4 +833,6 @@ form .btn:hover {
 .fc-scroller {
     border: #a8266f solid 2px;
 }
+
+ 
 
